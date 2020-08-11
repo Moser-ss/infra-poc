@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: fogos-pt
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongodb-data
+      containers:
+        - name: mongodb
+          image: "mongo:4.0"
+          ports:
+            - name: http
+              containerPort: 27017
+          volumeMounts:
+          - mountPath: "/data/db"
+            name: mongo-data
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+        
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongodb
+  namespace: fogos-pt
+spec:
+  type: LoadBalancer
+  selector:
+    app: mongodb
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: http

@@ -1,0 +1,3 @@
+name: fogos-pt-infra
+runtime: nodejs
+description: Infra setup for fogos-pt
