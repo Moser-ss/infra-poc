@@ -81,7 +81,7 @@ const deploymentMongoDB = new k8s.apps.v1.Deployment(
         spec: {
           containers: [
             {
-              image: "mongo:4.0",
+              image: "mongo:4.2",
               name: "mongodb",
               volumeMounts: [{ name: "mongo-data", mountPath: "/data/db" }],
               ports: [
