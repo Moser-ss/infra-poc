@@ -72,6 +72,12 @@ const deploymentMongoDB = new k8s.apps.v1.Deployment(
       namespace: clusterAppNamespace.metadata.name,
     },
     spec: {
+      strategy:{
+        rollingUpdate:{
+          maxUnavailable: 1,
+          maxSurge: 0
+        }
+      },
       selector: {
         matchLabels: mongoAppLabels,
       },
